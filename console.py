@@ -128,6 +128,7 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based or not
         on the class name. Ex: $ all BaseModel or $ all.
         """
+        storage.reload()
         req_dict = []
         objs_dict = storage.all()
 
@@ -141,7 +142,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             for key in objs_dict:
-                req_dict.append(str(objs_dict[key]))
+                cls = key.split('.')
+                if cls[0] == line:
+                    req_dict.append(str(objs_dict[key]))
             print(req_dict)
 
     def do_update(self, line):
